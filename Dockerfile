@@ -12,7 +12,7 @@ FROM base AS pocketbase
 
 ARG PB_VERSION=0.27.2
 
-# Download and unzip PocketBase
+# Download and unzip PocketBase (only upstream supported platforms for now)
 RUN ARCH=$(case "$(uname -m)" in \
       x86_64) echo "amd64" ;; \
       aarch64) echo "arm64" ;; \

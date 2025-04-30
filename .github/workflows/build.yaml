@@ -23,7 +23,7 @@ jobs:
             runs-on: ubuntu-24.04
           - platform: linux/arm64
             runs-on: ubuntu-24.04-arm
-          - platform: linux/armv7
+          - platform: linux/arm/v7
             runs-on: ubuntu-24.04-arm
           - platform: linux/ppc64le
             runs-on: ubuntu-24.04
