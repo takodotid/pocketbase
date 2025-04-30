@@ -16,9 +16,9 @@ ARG PB_VERSION=0.27.2
 RUN ARCH=$(case "$(uname -m)" in \
       x86_64) echo "amd64" ;; \
       aarch64) echo "arm64" ;; \
-      armv7l) "echo armv7" ;; \
-      ppc64le) "echo ppc64le" ;; \
-      s390x) "echo s390x" ;; \
+      armv7l) echo "armv7" ;; \
+      ppc64le) echo "ppc64le" ;; \
+      s390x) echo "s390x" ;; \
       *) echo "unknown" ;; \
     esac) && \
     wget https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_${ARCH}.zip -O /tmp/pb.zip && \
