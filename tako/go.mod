@@ -1,4 +1,8 @@
+<<<<<<< HEAD:tako/go.mod
 module tako-pocketbase
+=======
+module pb_hooks
+>>>>>>> parent of f35d6de (chore(project): rebase files):pb_hooks/go.mod
 
 go 1.24.2
 
