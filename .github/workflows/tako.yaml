@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "tako/**"
+      - ".github/workflows/tako.yaml"
 
 permissions:
   contents: read
