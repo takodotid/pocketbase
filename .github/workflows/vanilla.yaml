@@ -87,7 +87,7 @@ jobs:
       - name: Get PocketBase version in Dockerfile
         id: pocketbase
         run: |
-          export VERSION=$(cat ./Dockerfile | sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p')
+          export VERSION=$(cat ./vanilla/Dockerfile | sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p')
           echo "MAJOR=$(echo $VERSION | cut -d . -f1)" >> $GITHUB_OUTPUT
           echo "MINOR=$(echo $VERSION | cut -d . -f2)" >> $GITHUB_OUTPUT
           echo "PATCH=$(echo $VERSION | cut -d . -f3)" >> $GITHUB_OUTPUT

@@ -113,6 +113,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
 
+      - name: Get current unix timestamp
+        id: timestamp
+        uses: release-kit/unix-timestamp@v1.0.0
+
       - name: Generate Docker image metadata
         uses: docker/metadata-action@v5.7.0
         id: meta
