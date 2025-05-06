@@ -57,7 +57,7 @@ jobs:
         id: build
         uses: docker/build-push-action@v6.16.0
         with:
-          context: .
+          context: ./tako
           file: ./Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
