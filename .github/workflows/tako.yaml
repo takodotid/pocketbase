@@ -78,7 +78,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Get PocketBase version in Dockerfile
+      - name: Get PocketBase version in go.mod
         id: pocketbase
         run: |
           export VERSION=$(awk '/github.com\/pocketbase\/pocketbase/ {print substr($2, 2)}' ./tako/go.mod)
