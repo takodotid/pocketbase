@@ -56,7 +56,7 @@ func main() {
 			})
 		})
 
-		return nil
+		return e.Next()
 	})
 
 	if err := app.Start(); err != nil {

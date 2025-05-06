@@ -1,11 +1,11 @@
-name: Build & Push OCI Image to OCI Image Registry
+name: Build vanilla PocketBase image
 
 on:
   push:
     branches:
       - main
     paths:
-      - "Dockerfile"
+      - "vanilla/Dockerfile"
 
 permissions:
   contents: read
@@ -118,6 +118,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
 
+      - name: Get current unix timestamp
+        id: timestamp
+        uses: release-kit/unix-timestamp@v1.0.0
+
       - name: Generate Docker image metadata
         uses: docker/metadata-action@v5.7.0
         id: meta
@@ -127,6 +131,13 @@ jobs:
             ${{ needs.build.outputs.MAJOR }}
             ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}
             ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}.${{ needs.build.outputs.PATCH }}
+
+            ${{ needs.build.outputs.MAJOR }}-${{ steps.timestamp.outputs.timestamp }}
+            ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}-${{ steps.timestamp.outputs.timestamp }}
+            ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}.${{ needs.build.outputs.PATCH }}-${{ steps.timestamp.outputs.timestamp }}
+
+            type=sha,prefix=,suffix=,format=short
+            type=sha,prefix=,suffix=,format=long
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
