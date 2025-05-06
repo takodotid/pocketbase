@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v6.16.0
         with:
           context: ./tako
-          file: ./Dockerfile
+          file: ./tako/Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,"name=ghcr.io/takodotid/pocketbase",push-by-digest=true,name-canonical=true,push=${{ github.event_name == 'push' }}
