@@ -1,11 +1,12 @@
-name: Build & Push OCI Image to OCI Image Registry
+name: Build vanilla PocketBase image
 
 on:
   push:
     branches:
       - main
     paths:
-      - "Dockerfile"
+      - "vanilla/Dockerfile"
+      - ".github/workflows/vanilla.yaml"
 
 permissions:
   contents: read
@@ -63,8 +64,8 @@ jobs:
         id: build
         uses: docker/build-push-action@v6.16.0
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./vanilla
+          file: ./vanilla/Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,"name=ghcr.io/takodotid/pocketbase",push-by-digest=true,name-canonical=true,push=${{ github.event_name == 'push' }}
@@ -86,7 +87,7 @@ jobs:
       - name: Get PocketBase version in Dockerfile
         id: pocketbase
         run: |
-          export VERSION=$(cat ./Dockerfile | sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p')
+          export VERSION=$(cat ./vanilla/Dockerfile | sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p')
           echo "MAJOR=$(echo $VERSION | cut -d . -f1)" >> $GITHUB_OUTPUT
           echo "MINOR=$(echo $VERSION | cut -d . -f2)" >> $GITHUB_OUTPUT
           echo "PATCH=$(echo $VERSION | cut -d . -f3)" >> $GITHUB_OUTPUT
@@ -118,6 +119,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
 
+      - name: Get current unix timestamp
+        id: timestamp
+        uses: release-kit/unix-timestamp@v1.0.0
+
       - name: Generate Docker image metadata
         uses: docker/metadata-action@v5.7.0
         id: meta
@@ -127,6 +132,13 @@ jobs:
             ${{ needs.build.outputs.MAJOR }}
             ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}
             ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}.${{ needs.build.outputs.PATCH }}
+
+            ${{ needs.build.outputs.MAJOR }}-${{ steps.timestamp.outputs.timestamp }}
+            ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}-${{ steps.timestamp.outputs.timestamp }}
+            ${{ needs.build.outputs.MAJOR }}.${{ needs.build.outputs.MINOR }}.${{ needs.build.outputs.PATCH }}-${{ steps.timestamp.outputs.timestamp }}
+
+            type=sha,prefix=,suffix=,format=short
+            type=sha,prefix=,suffix=,format=long
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
