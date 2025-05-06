@@ -26,6 +26,9 @@ RUN ARCH=$(case "$(uname -m)" in \
     rm /tmp/pb.zip && \
     chmod +x /pb/pocketbase
 
+# uncomment to copy the local pb_hooks dir into the image
+COPY ./pb_hooks /pb/pb_hooks
+
 FROM base AS final
 
 # Copy the PocketBase installation from the previous stage
