@@ -1,4 +1,4 @@
-name: Build Tako's custom PocketBase image
+name: Build Tako's extended PocketBase image
 
 on:
   push:
@@ -24,6 +24,12 @@ jobs:
             runs-on: ubuntu-24.04
           - platform: linux/arm64
             runs-on: ubuntu-24.04-arm
+          - platform: linux/arm/v7
+            runs-on: ubuntu-24.04-arm
+          - platform: linux/ppc64le
+            runs-on: ubuntu-24.04
+          - platform: linux/s390x
+            runs-on: ubuntu-24.04
     runs-on: ${{ matrix.runs-on }}
 
     steps:
