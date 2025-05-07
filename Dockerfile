@@ -26,16 +26,18 @@ RUN ARCH=$(case "$(uname -m)" in \
     rm /tmp/pb.zip && \
     chmod +x /pb/pocketbase
 
-FROM base AS final
+# Vanilla image
+FROM base AS vanilla
 
 # Copy the PocketBase installation from the previous stage
 COPY --from=pocketbase /pb/* ./pb/
 
-# uncomment to copy the local pb_hooks dir into the image
-COPY ./pb_hooks /pb/pb_hooks
-
-EXPOSE 8080
-
 # Start PocketBase
 ENTRYPOINT [ "tini" ]
 CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8080"]
+
+# Tako's extended image
+FROM vanilla AS tako
+
+# COPY Tako's pb_hooks
+COPY ./pb_hooks /pb/pb_hooks
