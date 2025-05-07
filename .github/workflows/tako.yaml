@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "tako/**"
+      - "Dockerfile"
+      - "pb_hooks/**"
       - ".github/workflows/tako.yaml"
 
 permissions:
@@ -24,6 +25,12 @@ jobs:
             runs-on: ubuntu-24.04
           - platform: linux/arm64
             runs-on: ubuntu-24.04-arm
+          - platform: linux/arm/v7
+            runs-on: ubuntu-24.04-arm
+          - platform: linux/ppc64le
+            runs-on: ubuntu-24.04
+          - platform: linux/s390x
+            runs-on: ubuntu-24.04
     runs-on: ${{ matrix.runs-on }}
 
     steps:
@@ -58,11 +65,12 @@ jobs:
         id: build
         uses: docker/build-push-action@v6.16.0
         with:
-          context: ./tako
-          file: ./tako/Dockerfile
+          context: ./
+          file: ./Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,"name=ghcr.io/takodotid/pocketbase",push-by-digest=true,name-canonical=true,push=${{ github.event_name == 'push' }}
+          target: tako
 
       - name: Export digest
         run: |
@@ -78,10 +86,10 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Get PocketBase version in go.mod
+      - name: Get PocketBase version in Dockerfile
         id: pocketbase
         run: |
-          export VERSION=$(awk '/github.com\/pocketbase\/pocketbase/ {print substr($2, 2)}' ./tako/go.mod)
+          export VERSION=$(cat ./Dockerfile | sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p')
           echo "MAJOR=$(echo $VERSION | cut -d . -f1)" >> $GITHUB_OUTPUT
           echo "MINOR=$(echo $VERSION | cut -d . -f2)" >> $GITHUB_OUTPUT
           echo "PATCH=$(echo $VERSION | cut -d . -f3)" >> $GITHUB_OUTPUT
