@@ -98,5 +98,8 @@ routerAdd("POST", "/api/collections/{collection}/auth-with-ip", (e) => {
         return e.unauthorizedError("Request IP not found in the record.", requestIp);
     }
 
-    return $apis.recordAuthResponse(e, record, "", requestIp);
+    return $apis.recordAuthResponse(e, record, "", {
+        identity: json.identity,
+        requestIp,
+    });
 });
