@@ -25,28 +25,26 @@ routerAdd(
 
         switch (json.level) {
             case "debug":
-                $app.logger().debug(json.message, Object.entries(json.data).flat());
+                $app.logger().debug(json.message, ...Object.entries(json.data).flat());
                 break;
 
             case "info":
-                $app.logger().info(json.message, Object.entries(json.data).flat());
+                $app.logger().info(json.message, ...Object.entries(json.data).flat());
                 break;
 
             case "warn":
-                $app.logger().warn(json.message, Object.entries(json.data).flat());
+                $app.logger().warn(json.message, ...Object.entries(json.data).flat());
                 break;
 
             case "error":
-                $app.logger().error(json.message, Object.entries(json.data).flat());
+                $app.logger().error(json.message, ...Object.entries(json.data).flat());
                 break;
 
             default:
                 return e.badRequestError("Unknown log level.", json.level);
         }
 
-        e.json(201, {
-            success: true,
-        });
+        e.noContent(201);
     },
     $apis.requireSuperuserAuth(),
     $apis.skipSuccessActivityLog()
