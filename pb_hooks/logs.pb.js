@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference path="../node_modules/pocketbase-jsvm/index.d.ts" />
 
 /**
  * Allow superuser to send logs to the PocketBase server

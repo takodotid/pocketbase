@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference path="../node_modules/pocketbase-jsvm/index.d.ts" />
 
 /**
  * Allow authentication with IP address to auth collection
