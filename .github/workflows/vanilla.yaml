@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "vanilla/Dockerfile"
+      - "Dockerfile"
       - ".github/workflows/vanilla.yaml"
 
 permissions:
