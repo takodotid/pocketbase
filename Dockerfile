@@ -10,7 +10,7 @@ RUN apk add --no-cache \
 # Download PocketBase
 FROM base AS pocketbase
 
-ARG PB_VERSION=0.28.1
+ARG PB_VERSION=0.28.2
 
 # Download and unzip PocketBase (only upstream supported platforms for now)
 RUN ARCH=$(case "$(uname -m)" in \
