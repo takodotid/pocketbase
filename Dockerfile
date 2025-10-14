@@ -1,5 +1,5 @@
 # Use Latest Alpine as base
-FROM docker.io/library/alpine:3.22.1 AS base
+FROM docker.io/library/alpine:3.22.2 AS base
 
 # Install dependencies
 RUN apk add --no-cache \
