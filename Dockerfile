@@ -1,4 +1,4 @@
-# Use Latest Alpine as base
+# Use Alpine as base
 FROM docker.io/library/alpine:3.22.2 AS base
 
 # Install dependencies
