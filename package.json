@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.30.0",
   "devDependencies": {
     "pocketbase-jsvm": "^0.25.10001"
   }
