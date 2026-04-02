@@ -39,6 +39,7 @@ jobs:
         if: ${{ steps.latest.outputs.version != steps.current.outputs.version }}
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
           branch: "update/pocketbase-${{ steps.latest.outputs.version }}"
           title: "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
