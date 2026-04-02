@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   update:
@@ -30,21 +29,12 @@ jobs:
           CURRENT=$(sed -n 's/.*PB_VERSION=\([0-9.]*\).*/\1/p' ./Dockerfile)
           echo "version=${CURRENT}" >> $GITHUB_OUTPUT
 
-      - name: Update Dockerfile
+      - name: Commit and push updated Dockerfile
         if: ${{ steps.latest.outputs.version != steps.current.outputs.version }}
         run: |
           sed -i "s/PB_VERSION=${{ steps.current.outputs.version }}/PB_VERSION=${{ steps.latest.outputs.version }}/" ./Dockerfile
-
-      - name: Open pull request
-        if: ${{ steps.latest.outputs.version != steps.current.outputs.version }}
-        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
-          branch: "update/pocketbase-${{ steps.latest.outputs.version }}"
-          title: "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
-          body: |
-            Bumps PocketBase from `${{ steps.current.outputs.version }}` to `${{ steps.latest.outputs.version }}`.
-
-            Release notes: https://github.com/pocketbase/pocketbase/releases/tag/v${{ steps.latest.outputs.version }}
-          labels: dependencies
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Dockerfile
+          git commit -m "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
+          git push
