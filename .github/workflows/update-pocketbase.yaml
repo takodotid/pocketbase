@@ -38,3 +38,11 @@ jobs:
           git add Dockerfile
           git commit -m "chore: bump pocketbase to ${{ steps.latest.outputs.version }}"
           git push
+
+      - name: Trigger build workflows
+        if: ${{ steps.latest.outputs.version != steps.current.outputs.version }}
+        run: |
+          gh workflow run tako.yaml --ref main
+          gh workflow run vanilla.yaml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
