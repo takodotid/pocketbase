@@ -9,8 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.34.9",
   "devDependencies": {
-    "pocketbase-jsvm": "^0.25.10001"
+    "pocketbase-jsvm": "^0.40.60001"
   }
 }

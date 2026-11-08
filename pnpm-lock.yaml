@@ -9,14 +9,14 @@ importers:
   .:
     devDependencies:
       pocketbase-jsvm:
-        specifier: ^0.25.10001
-        version: 0.25.10001
+        specifier: ^0.40.60001
+        version: 0.40.60001
 
 packages:
 
-  pocketbase-jsvm@0.25.10001:
-    resolution: {integrity: sha512-F8Jss51uzp4C6nHcR5PxmscXtKbrWJjqDF/u7cHIh2amnUILnfY/JD5tTzYoqn3rDe1CIrQOaalDzAZ3gdMz9w==}
+  pocketbase-jsvm@0.40.60001:
+    resolution: {integrity: sha512-HBnbFFX43ZtYl7wnrxqzZuE7I5oIefI06dWXWpJeDzS77ho73CA0K257J0sAuiP1nisQtPU4m1biogVifnKsRQ==}
 
 snapshots:
 
-  pocketbase-jsvm@0.25.10001: {}
+  pocketbase-jsvm@0.40.60001: {}
